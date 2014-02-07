@@ -31,6 +31,36 @@ get '/player/:email' do
   erb :player
 end
 
+get '/schedule' do
+  db = settings.db
+  int_users = settings.db['players'].find(league: 'int')
+  int_count = int_users.count
+
+
+  int_users.each do |u|
+    random = [*0..int_count-1].sample
+    rand_chal = db['players'].find(league: 'int').limit(1).skip(random.to_i).next()
+
+
+    myself = rand_chal['email'] == u['email']
+    existing = db['matches'].find(players: {'$elemMatch' => {email: u['email']}}).count
+
+    if !myself && existing == 0
+      new_schedule = {
+        players: [{email: u['email']},{email: rand_chal['email']}],
+      }
+      db['matches'].insert(new_schedule)
+      puts 'will insert new entry'
+      # insert new entry
+    end
+  end
+
+
+
+  "asdasdas"
+end
+
+
 get '/newplayer' do
   erb :newplayer
 end
