@@ -1,1 +1,2 @@
-config.ru
+require './ping'
+run Sinatra::Application
