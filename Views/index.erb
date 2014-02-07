@@ -1,4 +1,9 @@
 Welcome To Ping Pong!
 
 <br>
-<a href="/player">Player</a>
+<% @players.each do |p| %>
+  <a href=<%="/player/#{p['email']}" %>>
+    <img src=<%= grav(p['email'])%>>
+  </a>
+<% end %>
+<br>

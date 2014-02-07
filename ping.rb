@@ -1,13 +1,62 @@
 require 'sinatra'
+require 'mongo'
+require 'digest/md5'
+
+configure do
+  uri = 'mongodb://admin:sjhvZFagAd1wMF8eB@widmore.mongohq.com:10010/pingpong'
+  conn = Mongo::MongoClient.from_uri(uri)
+  set :db, conn.db('pingpong')
+end
+
+
+helpers do
+  def grav(email)
+    user_hash = Digest::MD5.hexdigest(email)
+    "http://www.gravatar.com/avatar/#{user_hash}"
+  end
+end
+
 
 get '/' do
+  @players = settings.db['players'].find()
+  @int_players = settings.db['players'].find(league: 'int')
+  @beg_players = settings.db['players'].find(league: 'beg')
   erb :index
 end
 
-get '/player' do
+get '/player/:email' do
+  email = params[:email]
+  @user = settings.db['players'].find_one(email: email)
+  @user_avatar = grav(email)
   erb :player
 end
 
-post '/player' do
-  "hello #{params['name']} and #{params['email']}"
+get '/newplayer' do
+  erb :newplayer
+end
+
+post '/newplayer' do
+  db = settings.db
+
+  user = {
+    first_name: params['first_name'],
+    last_name: params['last_name'],
+    email: params['email'],
+    league: params['league'],
+    active: {
+      matches_won: 0,
+      matches_lost: 0,
+      games_won: 0,
+      games_lost: 0,
+    },
+    all_time: {
+      matches_won: 0,
+      matches_lost: 0,
+      games_won: 0,
+      games_lost: 0,
+    }
+  }
+
+  db['players'].insert(user)
+  "<a href='/'>Back</a>"
 end

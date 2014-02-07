@@ -1,5 +1,6 @@
-<form action="/player" method="post">
-  <input type="text" name="name">
-  <input type="text" name="email">
-  <input type="submit">
-</form>
+<img src=<%=@user_avatar%>>
+<h2><%= "#{@user['first_name']} #{@user['last_name']}" %></h2>
+<p>Match Won:<%= @user['active']['matches_won']%> </p>
+<p>Match Lost:<%= @user['active']['matches_lost']%> </p>
+<p>Games Won:<%= @user['active']['games_won']%> </p>
+<p>Games Lost:<%= @user['active']['games_lost']%> </p>
