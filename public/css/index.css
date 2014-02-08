@@ -1,0 +1,15 @@
+.oponent {
+  text-align: center;
+  display: inline;
+}
+
+.oponent img {
+  /*padding: 10px;*/
+}
+
+.oponent_wrap {
+  padding: 10px;
+  width: 220px;
+  text-align: center;
+  border: 1px solid #ccc;
+}

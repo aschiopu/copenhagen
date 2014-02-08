@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'mongo'
 require 'digest/md5'
+require 'json/ext'
 
 configure do
   uri = 'mongodb://admin:sjhvZFagAd1wMF8eB@widmore.mongohq.com:10010/pingpong'
@@ -8,7 +9,6 @@ configure do
   set :db, conn.db('pingpong')
   set :views, File.dirname(__FILE__) + "/views"
 end
-
 
 helpers do
   def grav(email)
@@ -22,6 +22,14 @@ get '/' do
   @players = settings.db['players'].find()
   @int_players = settings.db['players'].find(league: 'int')
   @beg_players = settings.db['players'].find(league: 'beg')
+  today = Time.now.utc
+  @l_matches = settings.db['matches'].find(league: 'int',
+    match_open: {'$lt' => today},
+    match_close: {'$gt' => today})
+  @b_matches = settings.db['matches'].find(league: 'beg',
+    match_open: {'$lt' => today},
+    match_close: {'$gt' => today})
+
   erb :index
 end
 
@@ -32,35 +40,105 @@ get '/player/:email' do
   erb :player
 end
 
-get '/schedule' do
+get '/newschedule' do
+  erb :nschedule
+end
+
+get '/nextschedule' do
+  puts 'got HERE'
+
+  puts "THIS IS THE PARAMS #{params}"
+
+  today = Time.now.utc
+  w = params[:week].to_i
+  one_week = 7*24*60*60
+  b_matches = settings.db['matches'].find(league: 'beg',
+    match_open: {'$lt' => today + one_week*w},
+    match_close: {'$gt' => today + one_week*w}).to_a
+  i_matches = settings.db['matches'].find(league: 'int',
+    match_open: {'$lt' => today + one_week*w},
+    match_close: {'$gt' => today + one_week*w}).to_a
+  {beg: b_matches, int: i_matches}.to_json
+end
+
+post '/newschedule' do
   db = settings.db
-  int_users = settings.db['players'].find(league: 'int')
-  int_count = int_users.count
+  league =  params[:league] || 'int'
+  db['matches'].remove(leage: league)
+  one_week = 7*24*60*60
+  start_date = Time.new(2014,2,2)
+  players = db['players'].find(league: league).to_a
+  p_count = players.count + 1
+  p_count_mod = p_count - 1
+  matches_per_week = (p_count/2.to_f).ceil
+  n_weeks = p_count - 1
 
 
-  int_users.each do |u|
-    random = [*0..int_count-1].sample
-    rand_chal = db['players'].find(league: 'int').limit(1).skip(random.to_i).next()
+  for w in 0...n_weeks
+    date_open = start_date + one_week*w
+    date_close = date_open + one_week
 
+    for m in 0...matches_per_week
+      if w == 0
+        players[p_count_mod] = players[1]
+        if m == 0
+          playerA = players[0]
+          playerB = players[p_count_mod-w]
+        else
+          playerA = players[m]
+          playerB = players[p_count_mod-m]
+        end
+      else
+        seventh = 7 - w*2 + 1
+        while seventh < 0
+          seventh += 7
+        end
+        seventh = seventh == p_count_mod ? 0 : seventh
+        players[p_count_mod] = players[seventh]
+        if m == 0
+          playerA = players[0]
+          playerB = players[p_count_mod-1*w]
+        elsif m < w
+          aIndex = p_count_mod - (w-m)
+          bIndex =  aIndex - m*2
+          if w+m >= p_count_mod
+            bIndex -= 1
+          end
+          playerA = players[aIndex]
+          playerB = players[bIndex]
+        elsif m == w
+          playerA = players[p_count_mod]
+          playerB = players[p_count_mod-2*w]
+        else
+          playerA = players[m - w]
+          playerB = players[p_count_mod-m-w]
+        end
 
-    myself = rand_chal['email'] == u['email']
-    existing = db['matches'].find(players: {'$elemMatch' => {email: u['email']}}).count
-
-    if !myself && existing == 0
-      new_schedule = {
-        players: [{email: u['email']},{email: rand_chal['email']}],
+      end
+      match = {
+        participants: [playerA['email'],playerB['email']],
+        league: league,
+        match_open: date_open.utc,
+        match_close: date_close.utc
       }
-      db['matches'].insert(new_schedule)
-      puts 'will insert new entry'
-      # insert new entry
+      db['matches'].insert(match)
     end
   end
 
-
-
-  "asdasdas"
+  redirect '/schedule'
 end
 
+get '/schedule' do
+  today = Time.now.utc
+  @l_matches = settings.db['matches'].find(league: 'int',
+    match_open: {'$lt' => today},
+    match_close: {'$gt' => today})
+  @b_matches = settings.db['matches'].find(league: 'beg',
+    match_open: {'$lt' => today},
+    match_close: {'$gt' => today})
+
+  erb :schedule
+end
 
 get '/newplayer' do
   erb :newplayer
