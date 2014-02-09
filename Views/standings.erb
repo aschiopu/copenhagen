@@ -1,50 +1,57 @@
-Pool A
-<table class='oponent'>
-  <thead>
-    <th>Image</th>
-    <th>Name</th>
-    <th>Matches Won</th>
-    <th>Matches Lost</th>
-    <th>Games Won</th>
-    <th>Games Lost</th>
-  </thead>
-  <tbody>
-    <% @int_players.each do |p| %>
-      <tr>
-        <td><a href=<%= "/player/#{p['email']}"%>><img src=<%= grav(p['email']) %>/></a></td>
-        <td><%= "#{p['first_name']} #{p['last_name']}"%></td>
-        <td><%= p['active']['matches_won'] %></td>
-        <td><%= p['active']['matches_lost'] %></td>
-        <td><%= p['active']['games_won'] %></td>
-        <td><%= p['active']['games_lost'] %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class='container'>
 
-<br>
+  <div class='columnA'>
 <!-- this is SO SO SO SO SO SO Silly -->
 <!-- use a template or something -->
-Pool B
-<table>
-  <thead>
-    <th>Image</th>
-    <th>Name</th>
-    <th>Matches Won</th>
-    <th>Matches Lost</th>
-    <th>Games Won</th>
-    <th>Games Lost</th>
-  </thead>
-  <tbody>
-    <% @beg_players.each do |p| %>
-      <tr>
-        <td><a href=<%= "/player/#{p['email']}"%>><img src=<%= grav(p['email']) %>/></a></td>
-        <td><%= "#{p['first_name']} #{p['last_name']}"%></td>
-        <td><%= p['active']['matches_won'] %></td>
-        <td><%= p['active']['matches_lost'] %></td>
-        <td><%= p['active']['games_won'] %></td>
-        <td><%= p['active']['games_lost'] %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    Pool Int
+    <table>
+      <thead>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Matches Won</th>
+        <th>Matches Lost</th>
+        <th>Games Won</th>
+        <th>Games Lost</th>
+      </thead>
+      <tbody>
+        <% @beg_players.each do |p| %>
+          <tr>
+            <td><a href=<%= "/player/#{p['email']}"%>><img src=<%= grav(p['email']) %>/></a></td>
+            <td><%= "#{p['first_name']} #{p['last_name']}"%></td>
+            <td><%= p['active']['matches_won'] %></td>
+            <td><%= p['active']['matches_lost'] %></td>
+            <td><%= p['active']['games_won'] %></td>
+            <td><%= p['active']['games_lost'] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class='columnB'>
+    Pool A
+    <table class='oponent'>
+      <thead>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Matches Won</th>
+        <th>Matches Lost</th>
+        <th>Games Won</th>
+        <th>Games Lost</th>
+      </thead>
+      <tbody>
+        <% @int_players.each do |p| %>
+          <tr>
+            <td><a href=<%= "/player/#{p['email']}"%>><img src=<%= grav(p['email']) %>/></a></td>
+            <td><%= "#{p['first_name']} #{p['last_name']}"%></td>
+            <td><%= p['active']['matches_won'] %></td>
+            <td><%= p['active']['matches_lost'] %></td>
+            <td><%= p['active']['games_won'] %></td>
+            <td><%= p['active']['games_lost'] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

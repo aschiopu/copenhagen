@@ -9,15 +9,33 @@ Welcome To Ping Pong!
 
 <%= erb(:schedule, :layout => false) %>
 
+
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<%= erb(:standings, :layout => false) %>
+
 <script type="text/javascript">
- _.templateSettings = {
-  evaluate : /\{\[([\s\S]+?)\]\}/g,
-  interpolate : /\{\{([\s\S]+?)\}\}/g
-};
 
 
   week = 0
-
   $('#nextWeek').on('click', function(e) {
     week += 1;
     e.preventDefault();
@@ -32,9 +50,12 @@ Welcome To Ping Pong!
 </script>
 
 <script type="text/template" id='oponents'>
-    <div class='oponent_wrap'>
-      <div>
-        Leslie Vs Christy
+  <div class='oponents_div'>
+    <div class='oponents_wrapper'>
+      <div class='oponents_name'>
+        {{ p1.split('@')[0]}}
+        VS
+        {{ p2.split('@')[0]}}
       </div>
       <div class='oponent'>
         <img src={{ 'http://www.gravatar.com/avatar/' + $.md5(p1)}}>
@@ -43,5 +64,5 @@ Welcome To Ping Pong!
         <img src={{ 'http://www.gravatar.com/avatar/' + $.md5(p2)}}>
       </div>
     </div>
-    <br>
+  </div>
 </script>

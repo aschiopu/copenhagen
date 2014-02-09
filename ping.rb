@@ -23,7 +23,7 @@ get '/' do
   @int_players = settings.db['players'].find(league: 'int')
   @beg_players = settings.db['players'].find(league: 'beg')
   today = Time.now.utc
-  @l_matches = settings.db['matches'].find(league: 'int',
+  @i_matches = settings.db['matches'].find(league: 'int',
     match_open: {'$lt' => today},
     match_close: {'$gt' => today})
   @b_matches = settings.db['matches'].find(league: 'beg',
@@ -130,7 +130,7 @@ end
 
 get '/schedule' do
   today = Time.now.utc
-  @l_matches = settings.db['matches'].find(league: 'int',
+  @i_matches = settings.db['matches'].find(league: 'int',
     match_open: {'$lt' => today},
     match_close: {'$gt' => today})
   @b_matches = settings.db['matches'].find(league: 'beg',
