@@ -5,8 +5,6 @@
 
 
 function getSchedule(week) {
-  $('#begSchedule').empty()
-  $('#intSchedule').empty()
   $.ajax({
     url: "/nextschedule",
     type: "GET",
@@ -16,6 +14,8 @@ function getSchedule(week) {
     accepts: 'application/json; charset=utf-8',
     dataType: 'json',
     success: function(data) {
+      $('#begSchedule').empty()
+      $('#intSchedule').empty()
       var template = _.template($('#oponents').html());
       if (data['beg'].length == 0) {
         $('#begSchedule').append('No Games This Week.');

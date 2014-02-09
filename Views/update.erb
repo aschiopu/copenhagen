@@ -1,0 +1,17 @@
+<% @matches.each do |m| %>
+
+  <%= m['participants'][0]%> vs <%= m['participants'][1]%>
+<%= m %>
+
+  <form action='/update' method='post'>
+    <input type='hidden' name='id' value=<%= m['_id'] %>></input>
+    <select name='winner'>
+      <option><%= m['participants'][0]%></option>
+      <option><%= m['participants'][1]%></option>
+    </select>
+    <input name='won' placeholder='won' value=3></input>
+    <input name='lost' placeholder='lost'></input>
+    <input type='submit'>
+  </form>
+  <br>
+<% end %>

@@ -8,6 +8,7 @@ configure do
   conn = Mongo::MongoClient.from_uri(uri)
   set :db, conn.db('pingpong')
   set :views, File.dirname(__FILE__) + "/views"
+  enable :method_override
 end
 
 helpers do
@@ -32,6 +33,64 @@ get '/' do
 
   erb :index
 end
+
+get '/update' do
+  today = Time.now.utc
+  @matches = settings.db['matches'].find(
+    match_open: {'$lt' => today},
+    match_close: {'$gt' => today}).to_a
+  erb :update
+end
+
+post '/update' do
+  puts "WOOO GOT HERE #{params}"
+  puts "WOOO GOT HERE #{params}"
+  puts "WOOO GOT HERE #{params}"
+
+  id = params[:id]
+  winner_email = params[:winner]
+  won = params[:won].to_i
+  lost = params[:lost].to_i
+
+  results = {
+    winner: winner_email,
+    won: won,
+    lost: lost
+  }
+
+  # update match
+  match = settings.db['matches'].update(
+    {_id: BSON::ObjectId(id)},
+    {'$set' => results})
+
+  # update winner
+
+  winner = settings.db['players'].find_one(email: winner_email)
+  puts 'HERE IS WHAT I FOUND'
+
+  winner['active']['matches_won'] += 1
+  winner['active']['games_won'] += 3
+  winner['active']['games_lost'] += lost
+  winner['all_time']['matches_won'] += 1
+  winner['all_time']['games_won'] += 3
+  winner['all_time']['games_lost'] += lost
+
+  update = {
+    active: winner['active'],
+    all_time: winner['all_time']
+  }
+
+  winner = settings.db['players'].update(
+    {email: winner_email},
+    {'$set' => update})
+
+
+  # update loser
+
+
+  redirect '/'
+end
+
 
 get '/player/:email' do
   email = params[:email]
