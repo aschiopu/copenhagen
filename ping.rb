@@ -16,6 +16,32 @@ helpers do
     user_hash = Digest::MD5.hexdigest(email)
     "http://www.gravatar.com/avatar/#{user_hash}"
   end
+
+  def update_player(email)
+    puts "updating #{email}"
+    player = settings.db['players'].find_one(email: email)
+    match_wins = settings.db['matches'].find(player_won: email)
+    match_lost = settings.db['matches'].find(player_lost: email)
+    m_won = match_wins.count > 0 ? match_wins.count : 0
+    m_lost = match_lost.count > 0 ? match_lost.count : 0
+    g_wonA = match_wins.count > 0 ? match_wins.dup.map {|g| g['won']}.inject(:+) : 0
+    g_wonB = match_lost.count > 0 ? match_lost.dup.map {|g| g['lost']}.inject(:+) : 0
+    g_won = g_wonA + g_wonB
+    g_lostA = match_wins.count > 0 ? match_wins.dup.map {|g| g['lost']}.inject(:+) : 0
+    g_lostB = match_lost.count > 0 ? match_lost.dup.map {|g| g['won']}.inject(:+) : 0
+    g_lost = g_lostA + g_lostB
+    player['active']['matches_won'] = m_won
+    player['active']['matches_lost'] = m_lost
+    player['active']['games_won'] = g_won
+    player['active']['games_lost'] = g_lost
+    update = {
+      active: player['active'],
+    }
+    player = settings.db['players'].update(
+      {email: email},
+      {'$set'=> update})
+  end
+
 end
 
 
@@ -34,6 +60,10 @@ get '/' do
   erb :index
 end
 
+not_found do
+  "Piss Off <br><a href='/'>Home</a>"
+end
+
 get '/update' do
   today = Time.now.utc
   @matches = settings.db['matches'].find(
@@ -43,17 +73,18 @@ get '/update' do
 end
 
 post '/update' do
-  puts "WOOO GOT HERE #{params}"
-  puts "WOOO GOT HERE #{params}"
-  puts "WOOO GOT HERE #{params}"
-
   id = params[:id]
   winner_email = params[:winner]
   won = params[:won].to_i
   lost = params[:lost].to_i
 
+  match = settings.db['matches'].find_one(_id: BSON::ObjectId(id))
+  match['participants'].delete(winner_email)
+  loser_email = match['participants'].first
+
   results = {
-    winner: winner_email,
+    player_won: winner_email,
+    player_lost: loser_email,
     won: won,
     lost: lost
   }
@@ -63,30 +94,10 @@ post '/update' do
     {_id: BSON::ObjectId(id)},
     {'$set' => results})
 
-  # update winner
 
-  winner = settings.db['players'].find_one(email: winner_email)
-  puts 'HERE IS WHAT I FOUND'
-
-  winner['active']['matches_won'] += 1
-  winner['active']['games_won'] += 3
-  winner['active']['games_lost'] += lost
-  winner['all_time']['matches_won'] += 1
-  winner['all_time']['games_won'] += 3
-  winner['all_time']['games_lost'] += lost
-
-  update = {
-    active: winner['active'],
-    all_time: winner['all_time']
-  }
-
-  winner = settings.db['players'].update(
-    {email: winner_email},
-    {'$set' => update})
-
-
-  # update loser
-
+  # update both players
+  update_player(winner_email)
+  update_player(loser_email)
 
   redirect '/'
 end
@@ -123,6 +134,7 @@ end
 post '/newschedule' do
   db = settings.db
   league =  params[:league] || 'int'
+
   db['matches'].remove(leage: league)
   one_week = 7*24*60*60
   start_date = Time.new(2014,2,2)
@@ -184,7 +196,7 @@ post '/newschedule' do
     end
   end
 
-  redirect '/schedule'
+  redirect '/'
 end
 
 get '/schedule' do
