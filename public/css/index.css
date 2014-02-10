@@ -1,12 +1,102 @@
+.page {
+  background: #f5f5f5;
+}
+
+.container {
+  width: 80%; /* Adjust to a total width of both .left and .right */
+  margin: 0 auto;
+}
+
+.section:not(.standings) {
+  border-left: solid 1px #ccc;
+  border-right: solid 1px #ccc;
+}
+
+.section {
+  height: 600px;
+  margin: 0;
+  border-bottom: solid 1px #ccc;
+}
+
+.sections {
+  background: white;
+}
+
+.sections .header {
+  background: #85ccc2;
+  height: 180px;
+  line-height: 180px;
+  text-align: center;
+
+}
+
+.sections .header h2{
+  border-bottom: solid 1px #fff;
+  border-top: 3px solid #fff;
+  color: #fff;
+  display: inline-block;
+  font: italic 400 60px/70px 'Vitesse SSm A','Vitesse SSm B';
+  text-transform: uppercase;
+}
+
+.sections .schedule h2 {
+  border-bottom: solid 1px #565B5B;
+  color:#565B5B;
+  display: inline-block;
+  font: italic 400 44px/50px 'Vitesse SSm A','Vitesse SSm B';
+  text-transform: uppercase;
+}
+
+
+.sections .standings h2 {
+  border-bottom: solid 1px #363838;
+  color: #363838;
+  display: inline-block;
+  font: italic 400 44px/50px 'Vitesse SSm A','Vitesse SSm B';
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.sections .prizes h2 {
+  border-bottom: solid 1px #fff;
+  color: #fff;
+  display: inline-block;
+  font: italic 400 44px/50px 'Vitesse SSm A','Vitesse SSm B';
+  text-transform: uppercase;
+}
+
+.sections .standings {
+  background: #f5f5f5;
+  text-align: center;
+}
+
+.sections .schedule {
+  text-align: center;
+}
+
+.sections .prizes {
+  background: #85ccc2;
+  text-align: center;
+}
+
 .oponent {
   text-align: center;
   display: inline;
+  width: 49%;
+  height: 1000px;
+  position: relative;
 }
 
+
+.oponents_wrapper .footer p{
+  color: #ccc;
+  margin-top: 0px;
+}
 .oponent img {
   padding: 5px;
   padding-left: 20px;
   padding-right: 20px;
+  padding-top: 20px;
 }
 
 .oponents_div {
@@ -19,6 +109,10 @@
   border: 1px solid #ccc;
 }
 
+.oponents_wrapper p {
+  margin-bottom: 0px;
+}
+
 .columnA {
     float: left;
     width: 50%;
@@ -29,8 +123,47 @@
     width: 50%;
 }
 
-.container {
-    width:90%; /* Adjust to a total width of both .left and .right */
-    margin: 0 auto;
-    text-align: center;
+
+.standings_table {
+  border-collapse:collapse;
+}
+
+.standings_table th {
+  color: #ccc;
+}
+
+
+.standings_table td {
+  border-bottom: solid 1px #ccc;
+}
+
+.standings_table td:not(.name) {
+  text-align: center;
+}
+
+.standings_table .name {
+  padding-left: 0px;
+  font-size: 15px;
+}
+
+.standings_table .narrow {
+  padding: 5px;
+}
+
+.standings_table td {
+  padding: 11px;
+}
+
+
+.standings_table td img {
+  height: 30px;
+}
+.standings_table .double_column {
+  font-size: 13px;
+}
+
+.double_column {
+  padding-left: 60px;
+  padding-right: 60px;
+  padding-bottom: 5px;
 }
