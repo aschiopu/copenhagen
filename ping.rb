@@ -46,16 +46,20 @@ end
 
 
 get '/' do
-  @players = settings.db['players'].find()
+  today = Time.now.utc
   @int_players = settings.db['players'].find(league: 'int')
   @beg_players = settings.db['players'].find(league: 'beg')
-  today = Time.now.utc
   @i_matches = settings.db['matches'].find(league: 'int',
     match_open: {'$lt' => today},
     match_close: {'$gt' => today})
   @b_matches = settings.db['matches'].find(league: 'beg',
     match_open: {'$lt' => today},
     match_close: {'$gt' => today})
+
+
+  @w_o = today - (2 - today.strftime('%w').to_i)*24*60*60
+  @string = "#{@w_o.strftime('%b')} #{@w_o.strftime('%d')} - #{@w_o.strftime('%d').to_i + 6}, #{@w_o.strftime('%Y')}"
+
 
   erb :index
 end
@@ -197,18 +201,6 @@ post '/newschedule' do
   end
 
   redirect '/'
-end
-
-get '/schedule' do
-  today = Time.now.utc
-  @i_matches = settings.db['matches'].find(league: 'int',
-    match_open: {'$lt' => today},
-    match_close: {'$gt' => today})
-  @b_matches = settings.db['matches'].find(league: 'beg',
-    match_open: {'$lt' => today},
-    match_close: {'$gt' => today})
-
-  erb :schedule
 end
 
 get '/newplayer' do

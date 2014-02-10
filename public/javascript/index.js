@@ -3,6 +3,10 @@
   interpolate : /\{\{([\s\S]+?)\}\}/g
 };
 
+function capitaliseFirstLetter(string)
+{
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 function getSchedule(week) {
   $.ajax({

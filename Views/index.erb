@@ -51,19 +51,21 @@
 </script>
 
 <script type="text/template" id='oponents'>
-  <div class='oponents_div'>
-    <div class='oponents_wrapper'>
-      <div class='oponents_name'>
-        {{ p1.split('@')[0]}}
-        VS
-        {{ p2.split('@')[0]}}
-      </div>
-      <div class='oponent'>
-        <img src={{ 'http://www.gravatar.com/avatar/' + $.md5(p1)}}>
-      </div>
-      <div class='oponent'>
-        <img src={{ 'http://www.gravatar.com/avatar/' + $.md5(p2)}}>
-      </div>
+<div class='oponents_div'>
+  <div class='oponents_wrapper'>
+    <div class='oponent'>
+      <img src={{ 'http://www.gravatar.com/avatar/' + $.md5(p1)}}>
+    </div>
+    <div class='oponent'>
+      <img src={{ 'http://www.gravatar.com/avatar/' + $.md5(p2)}}>
+    </div>
+    <div class='footer'>
+      <p>
+        {{ capitaliseFirstLetter(p1.split('@')[0])}}
+        vs
+        {{ capitaliseFirstLetter(p2.split('@')[0])}}
+      </p>
     </div>
   </div>
+</div>
 </script>
