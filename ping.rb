@@ -7,8 +7,8 @@ configure do
   uri = 'mongodb://admin:sjhvZFagAd1wMF8eB@widmore.mongohq.com:10010/pingpong'
   conn = Mongo::MongoClient.from_uri(uri)
   set :db, conn.db('pingpong')
-  set :views, File.dirname(__FILE__) + "/views"
-  enable :method_override
+
+  set :views, Proc.new { File.join(root, "Views") }
 end
 
 helpers do
