@@ -89,7 +89,7 @@
 
 
 .oponents_wrapper .footer p{
-  color: #ccc;
+  color: #565B5B;
   margin-top: 0px;
 }
 .oponent img {
@@ -166,4 +166,13 @@
   padding-left: 60px;
   padding-right: 60px;
   padding-bottom: 5px;
+}
+
+.prize {
+  display: inline;
+  padding: 30px;
+}
+
+.prize img{
+  height: 250px;
 }

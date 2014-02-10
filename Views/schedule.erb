@@ -32,27 +32,28 @@
   <h3>Copenhagen</h3>
   <div id='intSchedule'>
 
-    <% @i_matches.each do |m| %>
+    <% @i_matches.each_with_index do |m,i| %>
       <div class='oponents_div'>
         <div class='oponents_wrapper'>
-          <div class='oponents_name'>
-            <%= m['participants'][0].split('@')[0] %>
-            VS
-            <%= m['participants'][1].split('@')[0] %>
-          </div>
           <div class='oponent'>
             <img src=<%= grav(m['participants'][0]) %>>
           </div>
           <div class='oponent'>
             <img src=<%= grav(m['participants'][1]) %>>
           </div>
+          <div class='footer'>
+            <p>
+              <%= m['participants'][0].split('@')[0].capitalize %>
+              vs
+              <%= m['participants'][1].split('@')[0].capitalize %>
+            </p>
+          </div>
         </div>
       </div>
     <% end %>
+
   </div>
 </div>
-asd
-<%= @i_matches.to_a %>
-        <a href="/update">update match</a>
-        <a id='nextWeek' href="">Next Week</A>
+
         <a id='prevWeek' href="">Prev Week</A>
+        <a id='nextWeek' href="">Next Week</A>
