@@ -40,8 +40,10 @@ helpers do
       {'$set'=> update})
   end
 
+  def opp_name(email)
+    email.split('@')[0].capitalize
+  end
 end
-
 
 get '/' do
   today = Time.now.utc

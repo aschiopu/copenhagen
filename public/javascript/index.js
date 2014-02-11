@@ -21,10 +21,6 @@ function getSchedule(week) {
   }
   var week_string = dateTemplate(week_object)
 
-
-
-
-
   $.ajax({
     url: "/nextschedule",
     type: "GET",
