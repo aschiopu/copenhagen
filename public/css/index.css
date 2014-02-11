@@ -180,3 +180,8 @@
 .cur_week {
   font-size: 25px;
 }
+
+.match_played {
+  opacity: .7;
+  background-color: rgba(205,255,24, 0.6);
+}
