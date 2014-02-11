@@ -17,7 +17,6 @@ helpers do
   end
 
   def update_player(email)
-    puts "updating #{email}"
     player = settings.db['players'].find_one(email: email)
     match_wins = settings.db['matches'].find(player_won: email)
     match_lost = settings.db['matches'].find(player_lost: email)
@@ -55,8 +54,7 @@ get '/' do
     match_open: {'$lt' => today},
     match_close: {'$gt' => today})
 
-
-  @w_o = today - (2 - today.strftime('%w').to_i)*24*60*60
+  @w_o = today - (today.strftime('%w').to_i - 1)*24*60*60
   @string = "#{@w_o.strftime('%b')} #{@w_o.strftime('%d')} - #{@w_o.strftime('%d').to_i + 6}, #{@w_o.strftime('%Y')}"
 
 
@@ -118,10 +116,6 @@ get '/newschedule' do
 end
 
 get '/nextschedule' do
-  puts 'got HERE'
-
-  puts "THIS IS THE PARAMS #{params}"
-
   today = Time.now.utc
   w = params[:week].to_i
   one_week = 7*24*60*60

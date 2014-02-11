@@ -2,7 +2,6 @@
 <h2>Schedule</h2>
 <br>
 <div class='columnA'>
-  <h3>Kukulkan</h3>
   <div id='begSchedule'>
 
     <% @b_matches.each_with_index do |m,i| %>
@@ -29,7 +28,6 @@
 </div>
 
 <div class='columnB'>
-  <h3>Copenhagen</h3>
   <div id='intSchedule'>
 
     <% @i_matches.each_with_index do |m,i| %>
@@ -60,5 +58,5 @@
 <br>
 <br>
 <a id='prevWeek' href="">Prev Week  </A>
-<span class='cur_weel'> <%= @string %> </span>
+<span class='cur_week'> <%= @string %> </span>
 <a id='nextWeek' href=""> Next Week</A>
