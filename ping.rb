@@ -4,9 +4,8 @@ require 'digest/md5'
 require 'json/ext'
 
 configure do
-  uri = 'mongodb://admin:sjhvZFagAd1wMF8eB@widmore.mongohq.com:10010/pingpong'
-  conn = Mongo::MongoClient.from_uri(uri)
-  set :db, conn.db('pingpong')
+  conn = Mongo::MongoClient.from_uri(ENV['DB_URI'])
+  set :db, conn.db(ENV['DB_NAME'])
 
   set :views, Proc.new { File.join(root, "Views") }
 end
@@ -139,9 +138,9 @@ post '/newschedule' do
   db = settings.db
   league =  params[:league] || 'int'
 
-  db['matches'].remove(leage: league)
+
   one_week = 7*24*60*60
-  start_date = Time.new(2014,2,2)
+  start_date = Time.new(2014,2,9)
   players = db['players'].find(league: league).to_a
   p_count = players.count + 1
   p_count_mod = p_count - 1
