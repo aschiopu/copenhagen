@@ -11,20 +11,18 @@
       <% else %>
         <div class='oponents_div'>
       <% end %>
-        <div class='oponents_wrapper'>
-          <div class='oponent'>
-            <img src=<%= grav(m['participants'][0]) %>>
-          </div>
-          <div class='oponent'>
-            <img src=<%= grav(m['participants'][1]) %>>
-          </div>
-          <div class='footer'>
-            <p>
-              <%= m['participants'][0].split('@')[0].capitalize %>
-              vs
-              <%= m['participants'][1].split('@')[0].capitalize %>
-            </p>
-          </div>
+        <div class=''>
+          <ul class='oponent-list'>
+            <li>
+              <img src=<%= grav(m['participants'][0]) %>>
+              <span class='text-content'><span><%= m['participants'][0] == m['player_won'] ? m['won'] : m['lost'] %></span></span>
+            </li>
+            <li>
+              <img src=<%= grav(m['participants'][1]) %>>
+              <span class='text-content'><span><%= m['participants'][1] == m['player_won'] ? m['won'] : m['lost'] %></span></span>
+            </li>
+            <% if m['won'] %><img class='checkmark' src='/images/ok_2.png'/><% end %>
+          </ul>
         </div>
       </div>
     <% end %>
@@ -41,20 +39,18 @@
       <% else %>
         <div class='oponents_div'>
       <% end %>
-        <div class='oponents_wrapper'>
-          <div class='oponent'>
-            <img src=<%= grav(m['participants'][0]) %>>
-          </div>
-          <div class='oponent'>
-            <img src=<%= grav(m['participants'][1]) %>>
-          </div>
-          <div class='footer'>
-            <p>
-              <%= m['participants'][0].split('@')[0].capitalize %>
-              vs
-              <%= m['participants'][1].split('@')[0].capitalize %>
-            </p>
-          </div>
+        <div class=''>
+          <ul class='oponent-list'>
+            <li>
+              <img src=<%= grav(m['participants'][0]) %>>
+              <span class='text-content'><span><%= m['participants'][0] == m['player_won'] ? m['won'] : m['lost'] %></span></span>
+            </li>
+            <li>
+              <img src=<%= grav(m['participants'][1]) %>>
+              <span class='text-content'><span><%= m['participants'][1] == m['player_won'] ? m['won'] : m['lost'] %></span></span>
+            </li>
+            <% if m['won'] %><img class='checkmark' src='/images/ok_2.png'/><% end %>
+          </ul>
         </div>
       </div>
     <% end %>

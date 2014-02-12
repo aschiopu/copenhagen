@@ -50,25 +50,48 @@
 </script>
 
 <script type="text/template" id='oponents'>
-<div class='oponents_div'>
-  <div class='oponents_wrapper'>
-    <div class='oponent'>
-      <img src={{ 'http://www.gravatar.com/avatar/' + $.md5(p1)}}>
-    </div>
-    <div class='oponent'>
-      <img src={{ 'http://www.gravatar.com/avatar/' + $.md5(p2)}}>
-    </div>
-    <div class='footer'>
-      <p>
-        {{ capitaliseFirstLetter(p1.split('@')[0])}}
-        vs
-        {{ capitaliseFirstLetter(p2.split('@')[0])}}
-      </p>
-    </div>
-  </div>
-</div>
+
+      {{ if(won) { }}
+        <div class='oponents_div match_played'>
+      {{} else{ }}
+        <div class='oponents_div'>
+      {{ } }}
+        <div class=''>
+          <ul class='oponent-list'>
+            <li>
+              <img src={{= 'http://www.gravatar.com/avatar/' + $.md5(p1)}}>
+              <span class='text-content'>
+                <span>
+
+                  {{ if(p1 == player_won) { }}
+                  {{= won  }}
+                  {{ } else { }}
+                  {{= lost  }}
+                  {{ } }}
+                </span>
+              </span>
+            </li>
+            <li>
+              <img src={{= 'http://www.gravatar.com/avatar/' + $.md5(p2)}}>
+              <span class='text-content'>
+                <span>
+                  {{ if(p2 == player_won) { }}
+                  {{= won  }}
+                  {{ } else { }}
+                  {{= lost  }}
+                  {{ } }}
+                </span>
+              </span>
+            </li>
+            {{ if (won) { }}
+              <img class='checkmark' src='/images/ok_2.png'/>
+            {{ } }}
+          </ul>
+        </div>
+      </div>
+
 </script>
 
 <script type="text/template" id='dateWeek'>
-{{month}} {{w_open}} - {{w_close}}, {{year}}
+{{= month}} {{= w_open}} - {{= w_close}}, {{= year}}
 </script>

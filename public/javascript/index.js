@@ -1,6 +1,7 @@
- _.templateSettings = {
-  evaluate : /\{\[([\s\S]+?)\]\}/g,
-  interpolate : /\{\{([\s\S]+?)\}\}/g
+_.templateSettings = {
+  evaluate    : /\{\{([\s\S]+?)\}\}/g,
+  interpolate : /\{\{=([\s\S]+?)\}\}/g,
+  escape      : /\{\{-([\s\S]+?)\}\}/g
 };
 
 function capitaliseFirstLetter(string)
@@ -38,7 +39,10 @@ function getSchedule(week) {
       } else {
         $.each(data['beg'], function(i,p) {
           var oponents = {p1: p['participants'][0],
-                      p2: p['participants'][1]};
+                          p2: p['participants'][1],
+                          player_won: p['player_won'],
+                          won: p['won'],
+                          lost: p['lost']};
           $('#begSchedule').append(oppTemplate(oponents));
         })
       }
@@ -47,7 +51,10 @@ function getSchedule(week) {
       } else {
         $.each(data['int'], function(i,p) {
           var oponents = {p1: p['participants'][0],
-                      p2: p['participants'][1]};
+                          p2: p['participants'][1],
+                          player_won: p['player_won'],
+                          won: p['won'],
+                          lost: p['lost']};
           $('#intSchedule').append(oppTemplate(oponents));
         })
       }
