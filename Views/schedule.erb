@@ -1,5 +1,6 @@
 
 <h2>Schedule</h2>
+
 <br>
 <div class='columnA'>
   <div id='begSchedule'>
@@ -61,10 +62,12 @@
   </div>
 </div>
 
-<br>
-<br>
-<br>
-<br>
-<a id='prevWeek' href="">Prev Week  </A>
-<span class='cur_week'> <%= @string %> </span>
-<a id='nextWeek' href=""> Next Week</A>
+
+<p class='cur_week'> <%= @string %> </p>
+<div id='prevWeek' class='prevIcon'>
+  <img class='icon' src="/images/chevron-left.png">
+</div>
+<div id='nextWeek' class='nextIcon'>
+  <img class='icon' src="/images/chevron-right.png">
+</div>
+
