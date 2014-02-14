@@ -24,46 +24,50 @@
 }
 
 .sections .header {
-  background: #85ccc2;
+  background: #A7DBD8;
   height: 180px;
   line-height: 180px;
   text-align: center;
+  margin-top: -10px;
 
 }
-
-.sections .header h2{
-  border-bottom: solid 1px #fff;
-  border-top: 3px solid #fff;
-  color: #fff;
-  display: inline-block;
+.sections h2 {
   font: italic 400 60px/70px 'Vitesse SSm A','Vitesse SSm B';
   text-transform: uppercase;
+  display: inline-block;
+}
+
+
+.sections .header h2{
+  border-top: 3px solid #fff;
+  border-bottom: solid 1px #fff;
+  color: #fff;
 }
 
 .sections .schedule h2 {
   border-bottom: solid 1px #565B5B;
   color:#565B5B;
-  display: inline-block;
-  font: italic 400 44px/50px 'Vitesse SSm A','Vitesse SSm B';
-  text-transform: uppercase;
 }
 
 
 .sections .standings h2 {
-  border-bottom: solid 1px #363838;
-  color: #363838;
-  display: inline-block;
-  font: italic 400 44px/50px 'Vitesse SSm A','Vitesse SSm B';
-  text-transform: uppercase;
-  margin-bottom: 10px;
+  border-bottom: solid 1px #565B5B;
+  color: #565B5B;
 }
 
 .sections .prizes h2 {
   border-bottom: solid 1px #fff;
   color: #fff;
-  display: inline-block;
-  font: italic 400 44px/50px 'Vitesse SSm A','Vitesse SSm B';
-  text-transform: uppercase;
+}
+
+.sections .rules h2 {
+  border-bottom: solid 1px #565B5B;
+  color: #565B5B;
+}
+
+.sections .rules {
+  background: #F5F7DA;
+  text-align: center;
 }
 
 .sections .standings {
@@ -143,11 +147,6 @@
   padding-left: 60px;
   padding-right: 60px;
   padding-bottom: 5px;
-}
-
-.prize {
-  display: inline;
-  padding: 30px;
 }
 
 .prize img{
@@ -268,4 +267,41 @@ span.text-content {
 
 .match_played:hover span.text-content {
   opacity: 1;
+}
+
+/*rules*/
+
+.rulesDiv {
+  width:700px;
+  margin:0 auto;
+  text-align:left;
+}
+
+.rulesDiv li {
+  font-size: 22px;
+  padding: 5px;
+}
+
+/*prizes*/
+
+.prize {
+  display: inline-block;
+  width:33%;
+}
+
+.prize ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.prize li {
+  padding: 10px;
+  font-size: 18px;
+  color: #565B5B;
+}
+
+.prize li b{
+  padding: 10px;
+  font-size: 19px;
+  color: #353838;
 }
