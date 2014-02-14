@@ -48,7 +48,9 @@ end
 get '/' do
   today = Time.now.utc
   @int_players = settings.db['players'].find(league: 'int')
+    .sort({:'active.matches_won' => -1, :'active.games_won' => -1})
   @beg_players = settings.db['players'].find(league: 'beg')
+    .sort({:'active.matches_won' => -1, :'active.games_won' => -1})
   @i_matches = settings.db['matches'].find(league: 'int',
     match_open: {'$lt' => today},
     match_close: {'$gt' => today})
