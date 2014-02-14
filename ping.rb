@@ -7,7 +7,7 @@ configure do
   conn = Mongo::MongoClient.from_uri(ENV['DB_URI'])
   set :db, conn.db(ENV['DB_NAME'])
 
-  set :views, Proc.new { File.join(root, "Views") }
+  set :views, Proc.new { File.join(root, "views") }
 end
 
 helpers do
@@ -62,7 +62,7 @@ get '/' do
   @string = "#{@w_o.strftime('%b')} #{@w_o.strftime('%d')} - #{@w_o.strftime('%d').to_i + 6}, #{@w_o.strftime('%Y')}"
 
 
-  erb :index
+  erb :landing
 end
 
 not_found do
