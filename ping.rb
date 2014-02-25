@@ -69,11 +69,13 @@ not_found do
   "Piss Off <br><a href='/'>Home</a>"
 end
 
-get '/update' do
-  today = Time.now.utc
+get '/update/:week' do
+  week_zero = Time.new(2014,2,10)
+  cur_week = params[:week].to_i
+  this_week = (week_zero + 24*7*60*60*cur_week).utc
   @matches = settings.db['matches'].find(
-    match_open: {'$lt' => today},
-    match_close: {'$gt' => today}).to_a
+    match_open: {'$lt' => this_week},
+    match_close: {'$gt' => this_week}).to_a
   erb :update
 end
 
