@@ -4,22 +4,32 @@
   <div id='begSchedule'>
 
     <% @b_matches.each_with_index do |m,i| %>
-      <% if m['won'] %>
+      <% if m['won'] || m['participants'].count == 1%>
         <div class='oponents_div match_played'>
       <% else %>
         <div class='oponents_div'>
       <% end %>
         <div class=''>
           <ul class='oponent-list'>
-            <li>
-              <img src=<%= grav(m['participants'][0]) %>>
-              <span class='text-content'><span><%= m['participants'][0] == m['player_won'] ? m['won'] : m['lost'] %></span></span>
-            </li>
-            <li>
-              <img src=<%= grav(m['participants'][1]) %>>
-              <span class='text-content'><span><%= m['participants'][1] == m['player_won'] ? m['won'] : m['lost'] %></span></span>
-            </li>
-            <% if m['won'] %><img class='checkmark' src='/images/ok_2.png'/><% end %>
+              <li>
+                <img src=<%= grav(m['participants'][0]) %>>
+                <span class='text-content'>
+                  <span>
+                    <%= (m['participants'][0] == m['player_won'] ? m['won'] : m['lost']) || 'bye' %>
+                  </span>
+                </span>
+              </li>
+              <% if m['participants'].count == 2 %>
+              <li>
+                <img src=<%= grav(m['participants'][1]) %>>
+                <span class='text-content'>
+                  <span>
+                    <%= m['participants'][1] == m['player_won'] ? m['won'] : m['lost'] %>
+                  </span>
+                </span>
+              </li>
+              <% end %>
+            <% if m['won'] || m['participants'].count == 1%><img class='checkmark' src='/images/ok_2.png'/><% end %>
           </ul>
         </div>
       </div>

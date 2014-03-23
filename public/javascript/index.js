@@ -42,7 +42,8 @@ function getSchedule(week) {
                           p2: p['participants'][1],
                           player_won: p['player_won'],
                           won: p['won'],
-                          lost: p['lost']};
+                          lost: p['lost'],
+                          bye_week: p['participants'].length == 2 ? true : false};
           $('#begSchedule').append(oppTemplate(oponents));
         })
       }
@@ -54,7 +55,8 @@ function getSchedule(week) {
                           p2: p['participants'][1],
                           player_won: p['player_won'],
                           won: p['won'],
-                          lost: p['lost']};
+                          lost: p['lost'],
+                          bye_week: p['participants'].length == 2 ? true : false};
           $('#intSchedule').append(oppTemplate(oponents));
         })
       }

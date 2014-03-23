@@ -1,16 +1,16 @@
 <% @matches.each do |m| %>
-  <%= opp_name(m['participants'][0]) %> vs <%= opp_name(m['participants'][1]) %>
-
-  <form action='/update' method='post'>
-    <input type='hidden' name='id' value=<%= m['_id'] %>></input>
-    <select name='winner'>
-      <option><%= m['participants'][0]%></option>
-      <option><%= m['participants'][1]%></option>
-    </select>
-    <input name='won' placeholder='won' value=<%= m['won'] %>></input>
-    <input name='lost' placeholder='lost' value=<%= m['lost'] %>></input>
-    <input type='submit'>
-  </form>
-  <br>
-
+  <% if m['participants'].count == 2 %>
+    <%= opp_name(m['participants'][0]) %> vs <%= opp_name(m['participants'][1]) %>
+    <form action='/update' method='post'>
+      <input type='hidden' name='id' value=<%= m['_id'] %>></input>
+      <select name='winner'>
+        <option><%= m['participants'][0]%></option>
+        <option><%= m['participants'][1]%></option>
+      </select>
+      <input name='won' placeholder='won' value=<%= m['won'] %>></input>
+      <input name='lost' placeholder='lost' value=<%= m['lost'] %>></input>
+      <input type='submit'>
+    </form>
+    <br>
+  <% end %>
 <% end %>

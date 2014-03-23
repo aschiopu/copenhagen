@@ -3,17 +3,11 @@
     <link rel="shortcut icon" href="/images/favicon.ico" />
 </head>
 
-
-
-
-
-
 <link rel='stylesheet' href='/css/index.css' type='text/css'>
 <script src='/javascript/jquery-2.1.0.min.js' type='text/javascript'></script>
 <script src='/javascript/underscore-min.js' type='text/javascript'></script>
 <script src='/javascript/index.js' type='text/javascript'></script>
 <script src='/javascript/date.format.js' type='text/javascript'></script>
-
 
 <div class='page'>
   <div class='container'>
@@ -54,7 +48,7 @@
 
 <script type="text/template" id='oponents'>
 
-      {{ if(won) { }}
+      {{ if(won || !bye_week) { }}
         <div class='oponents_div match_played'>
       {{} else{ }}
         <div class='oponents_div'>
@@ -67,13 +61,14 @@
                 <span>
 
                   {{ if(p1 == player_won) { }}
-                  {{= won  }}
+                  {{= bye_week ? won : 'bye' }}
                   {{ } else { }}
-                  {{= lost  }}
+                  {{= bye_week ? lost : 'bye' }}
                   {{ } }}
                 </span>
               </span>
             </li>
+            {{ if (bye_week) { }}
             <li>
               <img src={{= 'http://www.gravatar.com/avatar/' + $.md5(p2)}}>
               <span class='text-content'>
@@ -86,7 +81,8 @@
                 </span>
               </span>
             </li>
-            {{ if (won) { }}
+            {{ } }}
+            {{ if (won || !bye_week) { }}
               <img class='checkmark' src='/images/ok_2.png'/>
             {{ } }}
           </ul>
